@@ -7,7 +7,7 @@ const useScroll = (
   endRotation = '-40deg',
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): [any, (ev: NativeSyntheticEvent<NativeScrollEvent>) => void] => {
-  const [frame] = useState<Animated.Value>(new Animated.Value(0));
+  const [frame] = useState<Animated.Value>(new Animated.Value(1));
 
   const scrollEvent = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
     const value = event.nativeEvent.contentOffset.y;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Animated, StyleSheet, Text, View, Button, Easing, ScrollView } from 'react-native';
 // eslint-disable-next-line import/extensions
 import useScroll from './hooks/useScroll';
@@ -32,7 +32,7 @@ export default function App(): JSX.Element {
     }).start();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFrame(1);    
   }, []);
 
