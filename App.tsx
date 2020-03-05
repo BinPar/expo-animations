@@ -8,6 +8,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  content: {
+    backgroundColor: '#000',
+    color: '#ff3',
+    borderRadius: 15,
+    padding: 5,
+    paddingHorizontal: 10,
+  }
 });
 
 export default function App(): JSX.Element {
@@ -23,7 +30,7 @@ export default function App(): JSX.Element {
   return (
     <View style={styles.container}>
       <Animated.View style={{ opacity: fadeAnim }}>
-        <Text>Open up App.tsx to start working on your app!</Text>
+        <Text style={styles.content}>Ejemplo de contenido</Text>
       </Animated.View>
     </View>
   );
