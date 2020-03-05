@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Animated, StyleSheet, Text, View, Button, Easing } from 'react-native';
+import { Animated, StyleSheet, Text, View, Button, Easing, ScrollView } from 'react-native';
+// eslint-disable-next-line import/extensions
+import useScroll from './hooks/useScroll';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
 
 export default function App(): JSX.Element {
   const [fadeAnim] = useState<Animated.Value>(new Animated.Value(0));
-  const [rotateValue] = useState<Animated.Value>(new Animated.Value(0));
+  const [scrollStyle, onScroll] = useScroll(100, -200, '-30deg');
 
   const setFrame = (value: number): void => {
     Animated.timing(fadeAnim, {
@@ -31,13 +33,7 @@ export default function App(): JSX.Element {
   };
 
   React.useEffect(() => {
-    setFrame(1);
-    Animated.timing(rotateValue, {
-      toValue: 200,
-      duration: 100000,
-      useNativeDriver: true,
-      easing: Easing.linear,
-    }).start();
+    setFrame(1);    
   }, []);
 
   const otherStyles = {
@@ -56,44 +52,39 @@ export default function App(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={otherStyles.animatedView}>
-        <Animated.View
-          style={{
-            transform: [
-              {
-                translateX: fadeAnim.interpolate({
-                  inputRange: [0, 0.5, 1],
-                  outputRange: [-200, -150, 0],
-                }),
-                rotate: fadeAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: ['-40deg', '0deg'],
-                }),
-              },
-            ],
-          }}
-        >
-          <Text style={styles.content}>Ejemplo de contenido</Text>
-        </Animated.View>
-      </Animated.View>
-      <Button
-        title="Entra"
-        onPress={(): void => {
-          setFrame(1);
-        }}
-      />
-      <Button
-        title="Medio"
-        onPress={(): void => {
-          setFrame(0.5);
-        }}
-      />
-      <Button
-        title="Sal"
-        onPress={(): void => {
-          setFrame(0);
-        }}
-      />
+      <ScrollView
+        style={{ width: '100%' }}
+        onScroll={onScroll}
+      >
+        <View style={styles.container}>
+          <View style={{ height: 300 }} />
+          <Animated.View style={otherStyles.animatedView}>
+            <Animated.View style={scrollStyle}>
+              <Text style={styles.content}>Ejemplo de contenido</Text>
+            </Animated.View>
+          </Animated.View>
+          <View style={{ height: 100 }} />
+          <Button
+            title="Entra"
+            onPress={(): void => {
+              setFrame(1);
+            }}
+          />
+          <Button
+            title="Medio"
+            onPress={(): void => {
+              setFrame(0.5);
+            }}
+          />
+          <Button
+            title="Sal"
+            onPress={(): void => {
+              setFrame(0);
+            }}
+          />
+          <View style={{ height: 600 }} />
+        </View>
+      </ScrollView>
     </View>
   );
 }
